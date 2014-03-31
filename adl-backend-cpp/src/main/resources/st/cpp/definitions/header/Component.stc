@@ -16,7 +16,7 @@ ComponentDefinitionHeader(definition) ::= <<
 #define __COMPONENT_<definition.name;format="toUpperCName">_ADL_HPP
 
 #include "mindcommon.hpp"
-
+#include "mindcpp/idl/Component.hpp"
 <if (definition.interfaces)>
 /* Start including the interface descriptions */
 <definition.interfaces:{#include "<it.signature; format="nameToPath">.itf.hpp"}; separator="\n">
@@ -32,35 +32,9 @@ ComponentDefinitionHeader(definition) ::= <<
 
 <endif>
 
-<if (definition.astNodeTypes.("component"))>
-/* Start declaring used namespaces */
-<definition.components:{using namespace __ns_<it.definitionReference.name;format="toCName">;}; separator="\n">
-/* End declaring used namespaces */
-
-<endif>
-
-
-namespace __ns_<definition.name;format="toCName"> {
-
-/* Start internal data definition: private component data + client interfaces references */
-<InternalDataDecl(definition=definition)>
-/* Stop internal data definition: private component data + client interfaces references */
-
-
-<if (definition.interfaces)>
-<if (definition.astDecorations.("serverItfInstances"))>
-/* Start definition of interface instances classes */
-<InterfaceInstancesClassDef(definition=definition)>
-/* End definition of interface instances classes */
-<endif>
-<endif>
-
-
 /* Start definition of component type */
 <DefinitionClassDef(definition=definition)>
 /* End  definition of component type */
-
-};
 
 #endif /* __COMPONENT_<definition.name;format="toUpperCName">_ADL_HPP */
 
@@ -73,50 +47,67 @@ namespace __ns_<definition.name;format="toCName"> {
 // -----------------------------------------------------------------------------
 // Component typedef
 
-DefinitionClassDef(definition) ::= <<
-class <definition.name;format="toCName">Definition <FullInheritanceDecl(definition=definition)> {
+DefinitionClassDef(definition, itf) ::= <<
+class <definition.name;format="toCName"> : public Component <definition.interfaces:{<if (isServer.(it.role))>,public virtual <it.signature; format="toCName"><endif>}> {
 <if (!(definition.astNodeTypes.("component")))> <! constructor and destructor for primitives !>
 public:
+  // Required interfaces
+  <definition.interfaces:{<if (isClient.(it.role))><it.signature; format="toCName"> *<it.name; format="toCName">; <endif>}; separator="\n">
+  
   // constructor and destructor
-  inline <definition.name;format="toCName">Definition(){};
-  inline ~<definition.name;format="toCName">Definition(){};
+  inline <definition.name;format="toCName">(){};
+  inline ~<definition.name;format="toCName">(){};
+  
+  // Methods to implement
+  // prototypes
+  <definition.interfaces:{<if (isServer.(it.role))><methodsPrototypes(itfDef=it.astDecorations.("interfaceDefinition"))><endif>}; separator="\n">
 <endif>
 
 <if (definition.astNodeTypes.("component"))>
-public:
+private:
   // sub-components
   <SubComponentsDecl(definition=definition)>
 
 public:
+
+  // Required interfaces
+  <definition.interfaces:{<if (isClient.(it.role))><it.signature; format="toCName"> *<it.name; format="toCName">; <endif>}; separator="\n">
+  // Ptrovided interfaces
+  <definition.interfaces:{<if (isServer.(it.role))><it.signature; format="toCName"> *<it.name; format="toCName">; <endif>}; separator="\n">
+
   // bindings initialization between sub-components
   <ContructorDeclInitBindings(definition=definition)>
 
+  mindcpp_boot_BootStrap *getBootStrapComponent() {
+    return &m_boot;
+  };
+
+  /* Call of internal method (delegation) */
+  <definition.interfaces:{<if (isServer.(it.role))><it.methods:{<methodCall(method=it)>}; separator="\n"><endif>}; separator="\n">
+
+
 <endif>
 };
+>>
+
+methodCallThroughReference(method, interface) ::= <<
+inline <methodDef(method=method, methodName=method.name, withThisPtr="false")> {
+  return this.interface-><method.name>(<method.parameters:{<it.name>};separator=", ">);
+}
+>>
+
+
+methodsPrototypes(itfDef) ::= <<
+<if (itfDef.methods)>
+  <itfDef.methods:{<methodDef(method=it, methodName=it.name, withThisPtr="false")>;}; separator="\n">
+<endif>
 >>
 
 //  -----------------------------------------------------------------------------
 // Full inheritance
 
 FullInheritanceDecl(definition) ::= <<
-: <ProvidedInterfacesInheritance(definition=definition)> virtual public internal_data
->>
-
-// -----------------------------------------------------------------------------
-// Internal data (private data + client interfaces references)
-
-InternalDataDecl(definition) ::= <<
-class internal_data {
-public:
-  inline internal_data(){};
-  virtual inline ~internal_data(){};
-<if (definition.astDecorations.("clientItfInstances"))>
-
-  // client interface references 
-  <definition.astDecorations.("clientItfInstances"):{<InterfaceReferencesDecl(itf=it)>}; separator="\n"> <! DeclareClientReferences will filter server interfaces !>
-<endif>
-
-};
+: <ProvidedInterfacesInheritance(definition=definition)>
 >>
 
 // -----------------------------------------------------------------------------
@@ -127,7 +118,7 @@ ProvidedInterfacesInheritance(definition) ::= <<
 >>
 
 ProvidedInterfaceInheritance(itf) ::= <<
-public <it.name; format="toCName"><endif>
+public <it.signature; format="toCName"><endif>
 >>
 
 InterfaceInstancesClassDef(definition) ::= <<
@@ -173,11 +164,11 @@ SubComponentsDecl(definition) ::= <<
 >>
 
 ComponentFieldDecl(component) ::= <<
-<component.definitionReference.name; format="toCName">Definition <component.name; format="toCName">;
+<component.definitionReference.name; format="toCName"> <component.name; format="toCName">;
 >>
 
 ContructorDeclInitBindings(definition) ::= <<
-<definition.name;format="toCName">Definition(){
+<definition.name;format="toCName">(){
   <if (definition.astNodeTypes.("binding"))>
     <if (definition.bindings)>
   <definition.bindings:{<DeclareBindingDefaultInit(binding=it)>}; separator="\n">
@@ -185,11 +176,12 @@ ContructorDeclInitBindings(definition) ::= <<
   <endif>
 }
 
-~<definition.name;format="toCName">Definition(){};
+~<definition.name;format="toCName">(){};
 >>
 
 DeclareBindingDefaultInit(binding) ::= <<
-<binding.fromComponent>.<binding.fromInterface>.reference=&<binding.toComponent>;
+<binding.fromComponent>.<binding.fromInterface>=&<binding.toComponent>;
+
 >>
 
 // -----------------------------------------------------------------------------

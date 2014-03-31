@@ -13,8 +13,6 @@ idlFile(idl) ::= <<
 /* This file is a generated file, do not edit. */
 
 #include "mindcommon.hpp"
-#include "mindcpp/idl/InterfaceDescriptor.hpp"
-#include "mindcpp/idl/InterfaceReference.hpp"
 
 <idl.includes:includeDirective(include=it); separator="\n">
 <idl.astDecorations.("referenced-interfaces").referencedInterfaces:includeReference(ref=it.IDL); separator="\n">
@@ -90,34 +88,18 @@ constDef(const) ::= "#define <const.name> <const.value>"
 interfaceDef(itf) ::= <<
 <interfaceDescriptorDef(itf)>
 
-<interfaceReferenceDef(itf)>
 >>
-
 //--------------------------------------------------------------------------------
 // New templates
 
 interfaceDescriptorDef(itf) ::= <<
-class <itf.name; format="toCName">Descriptor: public Mind::InterfaceDescriptor {
+class <itf.name; format="toCName">  {
 public:
-  inline <itf.name; format="toCName">Descriptor(){};
-  virtual inline ~<itf.name; format="toCName">Descriptor(){};
+  inline <itf.name; format="toCName">(){};
+  virtual inline ~<itf.name; format="toCName">(){};
 
   <itf.methods:{virtual <methodDef(method=it, methodName=it.name, withThisPtr="false")> = 0;}; separator="\n">
 };
->>
-
-interfaceReferenceDef(itf) ::= <<
-class <itf.name; format="toCName">Reference: public Mind::InterfaceReference\<<itf.name; format="toCName">Descriptor\>, public <itf.name; format="toCName">Descriptor {
-public:
-  /* Concrete implementation of the <itf.name; format="toCName"> ITF methods */
-  <itf.methods:{<methodCallThroughReference(method=it)>}; separator="\n">
-};
->>
-
-methodCallThroughReference(method) ::= <<
-inline <methodDef(method=method, methodName=method.name, withThisPtr="false")> {
-  return reference-><method.name>(<method.parameters:{<it.name>};separator=", ">);
-}
 >>
 
 //--------------------------------------------------------------------------------
