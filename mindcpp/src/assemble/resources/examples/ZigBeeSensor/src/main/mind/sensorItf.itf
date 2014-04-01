@@ -1,0 +1,6 @@
+interface sensorItf {
+	int getSensorType();
+	void switchOn();
+	void switchOff();
+	void reset();
+}

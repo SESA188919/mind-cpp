@@ -1,0 +1,25 @@
+composite zigBeeStack {
+ 	//provides afItf as zigbeestack;
+ 	provides zigBeeItf as zigbeeitf;
+ 	requires ledItf as leditf;
+ 
+ 	contains af as afInstance;
+ 	contains nwk as nwkInstance;
+ 	contains sys as sysInstance;
+ 	
+ 	contains as zigbeestackAPI
+ 		primitive {
+ 			provides zigBeeItf as zigbeeitf;
+ 			requires afItf as afitf;
+ 			requires sysItf as sysitf;
+ 			
+ 			source zigbeestackAPI.cpp;
+ 		};
+
+ 	binds zigbeestackAPI.afitf to afInstance.afitf;
+ 	binds zigbeestackAPI.sysitf to sysInstance.sysitf;
+ 	binds this.zigbeeitf to zigbeestackAPI.zigbeeitf;
+ 	binds nwkInstance.leditf to this.leditf;
+ 	//binds this.zigbeestack to afInstance.afitf;
+ 	binds afInstance.nwkitf to nwkInstance.nwkitf;
+}

@@ -1,0 +1,8 @@
+interface ledItf {
+
+void led01On();
+void led01Off();
+void led02On();
+void led02Off();
+	
+}

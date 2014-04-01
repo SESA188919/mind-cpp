@@ -1,0 +1,3 @@
+interface sysItf {
+	void Init(void );
+}

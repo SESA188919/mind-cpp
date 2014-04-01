@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"./dtd/docbookx.dtd" [
+<!ENTITY % myents SYSTEM "./shared.ent">
+%myents;
+]>
+<book status="draft" version="0.1" xmlns="http://docbook.org/ns/docbook">
+  <bookinfo>
+    <title>Example CPP 01</title>
+
+    <author>
+      <firstname>Yves Teissier</firstname>
+
+      <surname/>
+
+      <affiliation>
+        <orgname/>
+      </affiliation>
+    </author>
+
+    <pubdate>20/03/2014</pubdate>
+  </bookinfo>
+
+  <chapter>
+    <title>Document history</title>
+
+    <table frame="all">
+      <title>Document history</title>
+
+      <tgroup align="left" cols="4" colsep="0.2" rowsep="1">
+        <thead>
+          <row>
+            <entry>Version</entry>
+
+            <entry>Date</entry>
+
+            <entry>Author</entry>
+
+            <entry>Description</entry>
+          </row>
+        </thead>
+
+        <tbody>
+          <row>
+            <entry>0.1</entry>
+
+            <entry>21/02/2014</entry>
+
+            <entry>Yves Teissier</entry>
+
+            <entry>Document creation</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </chapter>
+
+  <chapter>
+    <title>Introduction</title>
+
+    <section>
+      <para>This example is dedicated to illustrate the usage of the cpp
+      support for the mind compiler.</para>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Overview</title>
+
+    <section>
+      <para>This overview as been realized by Artisan Studio (Atego).</para>
+
+      <para>
+        <note>The stereotype "anonymous" has been created.</note>
+      </para>
+    </section>
+
+    <section id="examplecpp01-01">
+      <formalpara>
+        <example>
+          <title>Component view</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" fileref="images/ExampleCpp01.png"
+                         format="PNG" scale="30"/>
+            </imageobject>
+          </mediaobject>
+        </example>
+      </formalpara>
+    </section>
+
+    <section id="examplecpp01-02">
+      <formalpara>
+        <example>
+          <title>Structural view</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" fileref="images/ExampleCpp01-str.png"
+                         format="PNG" scale="30"/>
+            </imageobject>
+          </mediaobject>
+        </example>
+      </formalpara>
+    </section>
+  </chapter>
+  <chapter>
+    <title>Illustrated features</title>
+
+    <section>
+      <para>This example illustrate the following features:</para>
+
+      <para>
+        <table frame="all">
+          <title>Illustrated features</title>
+
+          <tgroup align="left" cols="2" colsep="0.2" rowsep="1">
+            <thead>
+              <row>
+                <entry>Feature</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry>Type</entry>
+                <entry>The <code>temperatureSensor</code> primitive extend the <code>sensor</code> type.</entry>
+              </row>
+			  <row>
+                <entry>Composition</entry>
+                <entry>The <code>zigBeeStack</code> component is a composite. This composite requires a led driver and provides the ZigBee stack API.</entry>
+              </row>
+			  <row>
+                <entry>Anonymous</entry>
+                <entry>The <code>zigBeeStackAPI</code> component is anonymous. The role of this in-lined component is to compose the ZigBee stack API.</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+      </para>
+    </section>
+  </chapter>
+  <chapter>
+    <title>Running the example</title>
+	
+	<para>In order to build this example please set the appropriate environment variable to the mindcpp compiler.</para>
+	<note>
+		<para>The Makefile invoke the mindc compiler with the following options: <code>--cpp</code></para>
+	</note>
+	
+  </chapter>
+  
+  <chapter>
+    <title>Execution result</title>
+	
+	<para>The execution of the example must provides the following output:</para>
+	<example>
+          <title>Expected result</title>
+				<programlisting>
+					Initialise ZigBee stack
+					Switch ON sensor
+					Current temperature is 2730
+					Switch OFF sensor
+					Led 01 ON
+					Send data to the ZigBee network : haa ha
+					Led 01 OFF
+				</programlisting>
+	</example>
+  </chapter>
+  
+  
+</book>

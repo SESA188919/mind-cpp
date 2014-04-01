@@ -1,0 +1,6 @@
+primitive nwk {
+	provides nwkItf as nwkitf;
+	requires ledItf as leditf;
+	
+	source nwk.cpp
+}

@@ -1,0 +1,5 @@
+primitive temperatureSensor extends sensor {
+ 	provides temperatureItf as temperatureitf;
+ 
+  	source temperatureSensor.cpp;
+}

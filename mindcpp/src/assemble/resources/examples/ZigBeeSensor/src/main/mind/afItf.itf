@@ -1,0 +1,3 @@
+interface afItf {
+	void DataRequest(unsigned char* a_data);
+}
