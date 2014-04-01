@@ -120,6 +120,9 @@ protected:
   <definition.data.astSource; format="sourceTo#line">
   <definition.data.cCode>
   /* End inlined data code */
+  <elseif (definition.data.path)>
+  /* Include data file */
+  #include "<definition.data.path; format="toCPath">"
   <endif>
   <endif>
   <endif>
