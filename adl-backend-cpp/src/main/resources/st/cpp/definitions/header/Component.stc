@@ -112,7 +112,20 @@ public:
   virtual inline ~internal_data(){};
 <if (definition.astDecorations.("clientItfInstances"))>
 
+  <if (definition.astNodeTypes.("data"))>
+  <if (definition.data)>
+  <if (definition.data.cCode)>
+protected:
+  /* Start inlined data code */
+  <definition.data.astSource; format="sourceTo#line">
+  <definition.data.cCode>
+  /* End inlined data code */
+  <endif>
+  <endif>
+  <endif>
+
   // client interface references 
+public:
   <definition.astDecorations.("clientItfInstances"):{<InterfaceReferencesDecl(itf=it)>}; separator="\n"> <! DeclareClientReferences will filter server interfaces !>
 <endif>
 
