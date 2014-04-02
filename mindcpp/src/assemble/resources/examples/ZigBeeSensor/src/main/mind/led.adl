@@ -1,5 +1,5 @@
 primitive led {
 	provides ledItf as leditf;
 	
-	source led.cpp
+	source led.cpp;
 }
