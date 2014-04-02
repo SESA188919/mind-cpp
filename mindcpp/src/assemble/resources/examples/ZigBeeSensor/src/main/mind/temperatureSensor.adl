@@ -1,5 +1,14 @@
 primitive temperatureSensor extends sensor {
  	provides temperatureItf as temperatureitf;
+
+    data {{
+      struct {
+        int attribute_measured_value;
+        int attribute_max_value;
+        int attribute_min_value;
+        int data_type;
+      } PRIVATE;
+    }};
  
   	source temperatureSensor.cpp;
 }

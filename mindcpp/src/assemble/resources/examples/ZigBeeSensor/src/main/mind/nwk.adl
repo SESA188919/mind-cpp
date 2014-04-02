@@ -1,6 +1,7 @@
 primitive nwk {
 	provides nwkItf as nwkitf;
 	requires ledItf as leditf;
+	requires FlashMngItf as flashmngitf;
 	
-	source nwk.cpp
+	source nwk.cpp;
 }

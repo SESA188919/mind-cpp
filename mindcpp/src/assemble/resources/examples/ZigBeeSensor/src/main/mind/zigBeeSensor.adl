@@ -10,8 +10,10 @@ composite zigBeeSensor {
 	contains temperatureSensor as temperatureSensorInstance;
 	
 	contains led as ledInstance;
+	contains FlashMng as flashmngInstance;
   
   	binds zigBeeStackInstance.leditf to ledInstance.leditf;
+	binds zigBeeStackInstance.flashmngitf to flashmngInstance.flashmngitf;
  	binds BootInstance.entryPoint to mainInstance.out;
  	binds mainInstance.cluster to temperatureClusterInstance.cluster;
  	binds mainInstance.zigbeeitf to zigBeeStackInstance.zigbeeitf;

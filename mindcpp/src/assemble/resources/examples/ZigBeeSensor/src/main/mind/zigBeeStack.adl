@@ -2,6 +2,7 @@ composite zigBeeStack {
  	//provides afItf as zigbeestack;
  	provides zigBeeItf as zigbeeitf;
  	requires ledItf as leditf;
+ 	requires FlashMngItf as flashmngitf;
  
  	contains af as afInstance;
  	contains nwk as nwkInstance;
@@ -20,6 +21,7 @@ composite zigBeeStack {
  	binds zigbeestackAPI.sysitf to sysInstance.sysitf;
  	binds this.zigbeeitf to zigbeestackAPI.zigbeeitf;
  	binds nwkInstance.leditf to this.leditf;
+ 	binds nwkInstance.flashmngitf to this.flashmngitf;
  	//binds this.zigbeestack to afInstance.afitf;
  	binds afInstance.nwkitf to nwkInstance.nwkitf;
 }

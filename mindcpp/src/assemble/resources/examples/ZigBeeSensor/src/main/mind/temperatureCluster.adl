@@ -11,6 +11,7 @@ primitive temperatureCluster {
         int data_type;
       } PRIVATE;
     }};
-  
+      
   	source temperatureCluster.cpp;
+//	data temperatureCluster.dat;
 }
