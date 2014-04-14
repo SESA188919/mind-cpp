@@ -15,16 +15,20 @@
 
 
 int main(int argc, char *argv[]) {
+  int r;
 	zigBeeSensor baseComposite;
-	baseComposite.getBootStrapComponent()->Construct();
+
+	r = baseComposite.mainInstance.main(argc, argv);
+
+	//	baseComposite.getBootStrapComponent()->Construct();
 
 
 	// Bind all sub-components
-	baseComposite.getBootStrapComponent()->Init();
+	//	baseComposite.getBootStrapComponent()->Init();
 
 	// Run the application
-	baseComposite.getBootStrapComponent()->main(argc, argv);
+	//	baseComposite.getBootStrapComponent()->main(argc, argv);
 
 
-	baseComposite.getBootStrapComponent()->Destroy();
+	//	baseComposite.getBootStrapComponent()->Destroy();
 }

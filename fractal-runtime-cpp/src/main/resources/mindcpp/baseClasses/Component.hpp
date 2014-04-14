@@ -2,10 +2,7 @@
 #define MINDCPP_BASECLASSES_COMPONENT_HPP_
 
 class Component {
-protected:
-	String componentName;
-
-public
+public:
 	Component() {};
 	virtual ~Component() {};
 };

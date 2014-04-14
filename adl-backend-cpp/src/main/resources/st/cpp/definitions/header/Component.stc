@@ -16,7 +16,7 @@ ComponentDefinitionHeader(definition) ::= <<
 #define __COMPONENT_<definition.name;format="toUpperCName">_ADL_HPP
 
 #include "mindcommon.hpp"
-#include "mindcpp/idl/Component.hpp"
+#include "mindcpp/baseClasses/Component.hpp"
 <if (definition.interfaces)>
 /* Start including the interface descriptions */
 <definition.interfaces:{#include "<it.signature; format="nameToPath">.itf.hpp"}; separator="\n">
@@ -64,7 +64,7 @@ public:
 <endif>
 
 <if (definition.astNodeTypes.("component"))>
-private:
+public: // fix me extract the mainComponent ?
   // sub-components
   <SubComponentsDecl(definition=definition)>
 
@@ -77,10 +77,6 @@ public:
 
   // bindings initialization between sub-components
   <ContructorDeclInitBindings(definition=definition)>
-
-  mindcpp_boot_BootStrap *getBootStrapComponent() {
-    return &m_boot;
-  };
 
   /* Call of internal method (delegation) */
   <definition.interfaces:{<if (isServer.(it.role))><it.methods:{<methodCall(method=it)>}; separator="\n"><endif>}; separator="\n">
@@ -174,7 +170,7 @@ ContructorDeclInitBindings(definition) ::= <<
   <definition.bindings:{<DeclareBindingDefaultInit(binding=it)>}; separator="\n">
     <endif>
   <endif>
-}
+};
 
 ~<definition.name;format="toCName">(){};
 >>

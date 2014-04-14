@@ -14,27 +14,27 @@ ComponentInstances(topLevelDefinition, definition, instances) ::= <<
 #include "<definition.name;format="nameToPath">.adl.hpp"
 #include "<topLevelDefinition.name;format="nameToPath">.adl.hpp"
 
-using namespace __ns_<topLevelDefinition.name;format="toCName">;
+//using namespace __ns_<topLevelDefinition.name;format="toCName">;
 
 /* Need topLevel for initialization of the singleton reference */
-extern <topLevelDefinition.name; format="toCName">Definition __component_toplevel;
+//extern <topLevelDefinition.name; format="toCName">Definition __component_toplevel;
 
 /* ComponentInstances */
-<if (definition.astDecorations.("is-singleton"))>
-<definition.name;format="toCName">Definition* <definition.name;format="toCName">Singleton = &(__component_toplevel<first(instances).decorations.("nameInParent")>);
-<endif>
+//<if (definition.astDecorations.("is-singleton"))>
+//<definition.name;format="toCName">Definition* <definition.name;format="toCName">Singleton = &(__component_toplevel<first(instances).decorations.("nameInParent")>);
+//<endif>
 
->>
+//>>
 
 TopLevelInstances(topLevelDefinition, definitions, instances) ::= <<
 /* Generated file: <topLevelDefinition;format="nameToPath">_<definition.name;format="toCName">_instances.cpp */
 
-#include "<topLevelDefinition.name;format="nameToPath">.adl.hpp"
+//#include "<topLevelDefinition.name;format="nameToPath">.adl.hpp"
 
-using namespace __ns_<topLevelDefinition.name;format="toCName">;
+//using namespace __ns_<topLevelDefinition.name;format="toCName">;
 
 /* TopLevelInstance(s) */
-<topLevelDefinition.name; format="toCName">Definition __component_toplevel;
+//<topLevelDefinition.name; format="toCName">Definition __component_toplevel;
 
 >>
 
