@@ -50,6 +50,22 @@ ComponentDefinitionHeader(definition) ::= <<
 DefinitionClassDef(definition, itf) ::= <<
 class <definition.name;format="toCName"> : public Component <definition.interfaces:{<if (isServer.(it.role))>,public virtual <it.signature; format="toCName"><endif>}> {
 <if (!(definition.astNodeTypes.("component")))> <! constructor and destructor for primitives !>
+
+  <if (definition.astNodeTypes.("data"))>
+  <if (definition.data)>
+  <if (definition.data.cCode)>
+protected:
+  /* Start inlined data code */
+  <definition.data.astSource; format="sourceTo#line">
+  <definition.data.cCode>
+  /* End inlined data code */
+  <elseif (definition.data.path)>
+  /* Include data file */
+  #include "<definition.data.path; format="toCPath">"
+  <endif>
+  <endif>
+  <endif>
+
 public:
   // Required interfaces
   <definition.interfaces:{<if (isClient.(it.role))><it.signature; format="toCName"> *<it.name; format="toCName">; <endif>}; separator="\n">
