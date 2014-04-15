@@ -1,0 +1,13 @@
+@Singleton
+primitive FlashMng {
+	provides FlashMngItf as flashmngitf;
+	
+	data {{
+      	     struct {
+		int toto;
+		int tata;
+      	     } PRIVATE;
+    	}};
+
+	source FlashMng.cpp;
+}

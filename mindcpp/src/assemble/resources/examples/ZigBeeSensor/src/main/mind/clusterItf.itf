@@ -1,0 +1,46 @@
+
+interface clusterItf {
+	/*
+	 * @fn void Init()
+	 * @brief Initialize the cluster
+	 */
+	void Init();
+
+	/*
+	 * @fn uint8 getDirection()
+	 * @brief Return the type of cluster (input = server; output = client)
+	 * @return clusterID 0 = output cluster; 1 = input cluster; 2 = input and ouput
+	 */
+	unsigned char getDirection();
+	/*
+	 * @fn uint16 getClusterID()
+	 * @brief Get the cluster ID
+	 * @return clusterID The cluster ID
+	 */
+	unsigned short getClusterID();
+	
+	/*
+	 * @fn uint8 serialize(uint8* a_iSize, uint8 * a_pBuffer)
+	 * @brief Get the serialized buffer ready to send
+	 * @param a_isize The buffer size
+	 * @param a_pbuffer The buffer
+	 * @return result The result of the operation (0 = success, !=1 failed)
+	 */						
+	unsigned char serialize(unsigned char* a_iSize, unsigned char* a_pBuffer);
+	
+	/*
+	 * @fn uint8 deserialize(uint8 a_iInSize, uint8* a_pInBuffer, uint8* a_iOutSize, uint8* a_pOutBuffer)
+	 * @brief Deserialized an input buffer
+	 * @param a_isize The buffer size
+	 * @param a_pbuffer The buffer
+	 * @return result The result of the operation (0 = success, !=1 failed)
+	 */
+	unsigned char deserialize(unsigned char a_iInSize, unsigned char* a_pInBuffer, unsigned char* a_iOutSize, unsigned char* a_pOutBuffer);
+	
+	/**
+	 * @fn uint8 update()
+	 * @brief update the cluster
+	 * @return The result of the operation (0 = success, !=1 failed)
+	 */
+	unsigned char update();
+}

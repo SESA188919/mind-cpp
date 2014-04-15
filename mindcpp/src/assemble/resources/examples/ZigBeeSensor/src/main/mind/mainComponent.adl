@@ -1,0 +1,8 @@
+primitive mainComponent {
+  	provides mindcpp.boot.Main as out;
+ 	
+ 	requires zigBeeItf as zigbeeitf;
+ 	requires clusterItf as cluster;
+
+  	source mainComponent.cpp;
+}

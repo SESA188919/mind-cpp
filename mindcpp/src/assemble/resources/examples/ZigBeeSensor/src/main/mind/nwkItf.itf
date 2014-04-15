@@ -1,0 +1,3 @@
+interface nwkItf {
+	void SendRequest(unsigned char* a_data);
+}

@@ -1,0 +1,6 @@
+primitive af {
+	provides afItf as afitf;
+	requires nwkItf as nwkitf;
+	
+	source af.cpp;
+}

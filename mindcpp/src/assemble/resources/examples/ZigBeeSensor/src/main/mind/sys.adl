@@ -1,0 +1,5 @@
+primitive sys {
+	provides sysItf as sysitf;
+	
+	source sys.cpp;
+}

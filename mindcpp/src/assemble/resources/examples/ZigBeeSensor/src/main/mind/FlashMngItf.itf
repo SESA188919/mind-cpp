@@ -1,0 +1,5 @@
+interface FlashMngItf {
+	void WritePage(int address, int byte);
+	void ReadPage(int address, int *byte);
+
+}

@@ -1,0 +1,22 @@
+
+
+composite zigBeeSensor {
+	contains mindcpp.boot.BootStrap as BootInstance;
+	contains mainComponent as mainInstance;
+	
+	contains zigBeeStack as zigBeeStackInstance;
+	
+	contains temperatureCluster as temperatureClusterInstance; // replace by cluster[0..n] in order to support several clusters.
+	contains temperatureSensor as temperatureSensorInstance;
+	
+	contains led as ledInstance;
+	contains FlashMng as flashmngInstance;
+  
+  	binds zigBeeStackInstance.leditf to ledInstance.leditf;
+	binds zigBeeStackInstance.flashmngitf to flashmngInstance.flashmngitf;
+ 	binds BootInstance.entryPoint to mainInstance.out;
+ 	binds mainInstance.cluster to temperatureClusterInstance.cluster;
+ 	binds mainInstance.zigbeeitf to zigBeeStackInstance.zigbeeitf;
+ 	binds temperatureClusterInstance.temperatureitf to temperatureSensorInstance.temperatureitf;
+ 	binds temperatureClusterInstance.sensoritf to temperatureSensorInstance.sensoritf;
+}

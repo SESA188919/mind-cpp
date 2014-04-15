@@ -1,0 +1,29 @@
+
+interface temperatureItf {
+
+	/**
+	 * Get the current temperature (unit = degree celcius)
+	 * The value is a integer on 16bits.
+	 * The coefficient is x100.
+	 * ex: for 20°C => value = 2000
+	 */	
+	unsigned char GetCurrentTemperature(signed short *data);
+	/**
+	 * Get the maximum temperature (unit = degree celcius)
+	 * The value is a integer on 16bits.
+	 * The coefficient is x100.
+	 * ex: for 20°C => value = 2000
+	 */	
+	unsigned char GetMaxTemperature(signed short *data);
+	/**
+	 * Get the minimum temperature (unit = degree celcius)
+	 * The value is a integer on 16bits.
+	 * The coefficient is x100.
+	 * ex: for 20°C => value = 2000
+	 */
+	unsigned char GetMinTemperature(signed short *data);
+	/**
+	 * Get the temperature accuracy 
+	 */
+	unsigned char GetTemperatureAccuracy(unsigned short *data);
+}

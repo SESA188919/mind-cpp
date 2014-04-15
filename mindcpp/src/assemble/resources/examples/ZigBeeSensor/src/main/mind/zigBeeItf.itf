@@ -1,0 +1,5 @@
+
+interface zigBeeItf {
+	void DataRequest(unsigned char*);
+	void Init(void );
+}
